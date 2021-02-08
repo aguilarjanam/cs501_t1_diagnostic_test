@@ -73,5 +73,5 @@ auth_blueprint.add_url_rule(
 auth_blueprint.add_url_rule(
     '/users/index',
     view_func=userlist_view,
-    methods=['POST', 'GET']
+    methods=['GET']
 )
