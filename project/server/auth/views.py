@@ -19,7 +19,7 @@ class RegisterAPI(MethodView):
     		'message': 'Request successful but please send an HTTP POST request to register the user.'
     	}
     	return make_response(jsonify(responseObject)), 201
-
+        
     def post(self):
         # get the post data
         post_data = request.get_json(); print(request)
@@ -44,6 +44,7 @@ class RegisterAPI(MethodView):
                 }
                 return make_response(jsonify(responseObject)), 201
             except Exception as e:
+                print(e)
                 responseObject = {
                     'status': 'fail',
                     'message': 'Some error occurred. Please try again.'
@@ -57,12 +58,20 @@ class RegisterAPI(MethodView):
             return make_response(jsonify(responseObject)), 202
 
 
+
 # define the API resources
 registration_view = RegisterAPI.as_view('register_api')
+ 
+from project.server.users.views import userlist_view
 
 # add Rules for API Endpoints
 auth_blueprint.add_url_rule(
     '/auth/register',
     view_func=registration_view,
+    methods=['POST', 'GET']
+)
+auth_blueprint.add_url_rule(
+    '/users/index',
+    view_func=userlist_view,
     methods=['POST', 'GET']
 )
